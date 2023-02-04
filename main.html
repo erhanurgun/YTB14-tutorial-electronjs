@@ -12,9 +12,29 @@
 <body>
 
     <div class="container">
-        <h1>ElectronJS</h1>
-        <button class="btn btn-primary">Test</button>
+        <h1 class="text-center">ElectronJS</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="value">
+            </div>
+            <div class="col-md-4">
+                <button class="form-control btn btn-primary" id="sendBtn">Gönder</button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        const electron = require("electron");
+        const {
+            ipcRenderer
+        } = electron;
+
+        let sendBtn = document.querySelector("#sendBtn");
+        let inputValue = document.querySelector("#value");
+        sendBtn.addEventListener("click", () => {
+            ipcRenderer.send("key:inputValue", inputValue.value);
+        });
+    </script>
 
 </body>
 
