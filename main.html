@@ -15,10 +15,15 @@
         <h1 class="text-center">ElectronJS</h1>
         <div class="row">
             <div class="col-md-8">
-                <input class="form-control" type="text" id="value">
+                <input class="form-control mt-2" type="text" id="value" placeholder="Bir değer giriniz..." required>
             </div>
             <div class="col-md-4">
-                <button class="form-control btn btn-primary" id="sendBtn">Gönder</button>
+                <button class="form-control mt-2 btn btn-primary" id="sendBtn">Gönder</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <button class="form-control btn btn-warning" id="openNewBtn">Yeni Bir Pencere Aç</button>
             </div>
         </div>
     </div>
@@ -31,6 +36,12 @@
 
         let sendBtn = document.querySelector("#sendBtn");
         let inputValue = document.querySelector("#value");
+        let openNew = document.querySelector("#openNewBtn");
+
+        openNew.addEventListener("click", () => {
+            ipcRenderer.send("key:openNewWindow");
+        });
+
         sendBtn.addEventListener("click", () => {
             ipcRenderer.send("key:inputValue", inputValue.value);
         });

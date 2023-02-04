@@ -18,8 +18,19 @@ app.on("ready", () => {
   );
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
+
+  ipcMain.on("key", (err, data) => {
+    console.log(data);
+  });
   ipcMain.on("key:inputValue", (err, data) => {
     console.log(data);
+  });
+  // yeni pencere açma
+  ipcMain.on("key:openWindow", () => {
+    createWindow();
+  });
+  mainWindow.on("close", () => {
+    app.quit();
   });
 });
 
@@ -68,5 +79,23 @@ if (process.env.NODE_ENV !== "production") {
         role: "reload",
       },
     ],
+  });
+}
+
+function createWindow() {
+  addWindow = new BrowserWindow({
+    width: 482,
+    height: 200,
+    title: "Yeni Bir Pencere",
+  });
+  addWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "modal.html"),
+      protocol: "file:",
+      slashes: true,
+    })
+  );
+  addWindow.on("close", () => {
+    addWindow = null;
   });
 }
